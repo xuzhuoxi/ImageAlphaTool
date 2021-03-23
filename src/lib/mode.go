@@ -6,26 +6,26 @@ const (
 	// 无
 	FilterNone FilterMode = iota
 	// 区间
-	Between
+	FilterBetween
 	// 等于
-	Equal
+	FilterEqual
 	// 小于
-	Smaller
+	FilterSmaller
 	// 小于等于
-	SmallEqual
+	FilterSmallerOrEqual
 	// 大于
-	Larger
+	FilterLarger
 	// 小于等于
-	LargeEqual
+	FilterLargerOrEqual
 )
 
 type ResultMode int
 
 const (
 	// 无
-	ResultNone ResultMode = iota
+	ResultNone ResultMode = 1 << iota
 	// 记录
-	Log
+	ResultLog
 	// 删除
-	Delete
+	ResultDelete
 )

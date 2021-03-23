@@ -76,17 +76,17 @@ func (ff *FlagFilter) Max() uint32 {
 
 func (ff *FlagFilter) CheckFilter(value uint32) bool {
 	switch ff.Mode {
-	case Equal:
+	case FilterEqual:
 		return ff.Value() == value
-	case Between:
+	case FilterBetween:
 		return value >= ff.Value() && value < ff.Value()
-	case Smaller:
+	case FilterSmaller:
 		return value < ff.Value()
-	case SmallEqual:
+	case FilterSmallerOrEqual:
 		return value <= ff.Value()
-	case Larger:
+	case FilterLarger:
 		return value > ff.Value()
-	case LargeEqual:
+	case FilterLargerOrEqual:
 		return value >= ff.Value()
 	default:
 		return false
@@ -98,7 +98,7 @@ func (ff *FlagFilter) ParseFilter(mode FilterMode, value string) error {
 		return errors.New("FlagFilter:mode is error! ")
 	}
 	ff.Mode = mode
-	if mode == Between {
+	if mode == FilterBetween {
 		values := strings.Split(value, ",")
 		if len(values) != 2 {
 			return errors.New("FlagFilter:value is error! ")
@@ -131,13 +131,17 @@ type FlagResult struct {
 	LogPath string
 }
 
+func (fr *FlagResult) CheckMode(mode ResultMode) bool {
+	return (fr.Mode & mode) > 0
+}
+
 func (fr *FlagResult) ParseResult(mode ResultMode, format string, path string, logger logx.ILogger) error {
 	if mode == ResultNone {
 		return errors.New("FlagResult:mode is error! ")
 	}
 	fr.Mode = mode
 
-	if mode == Delete {
+	if mode == ResultDelete {
 		return nil
 	}
 

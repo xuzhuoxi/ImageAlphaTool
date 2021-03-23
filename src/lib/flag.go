@@ -32,7 +32,7 @@ func (fc *FlagConfig) ParseResult(mode ResultMode, format string, path string, l
 // -fm 			(必要)配置模式					1区间2相等3小于4小于等于5大于6大于等于
 // -fv 			(必要)配置参数					fm=1时：数值,数值。其它：数值。注意数值：[0,255]
 //
-// -rm			(必要)结果模式					1记录2直接删除
+// -rm			(必要)结果模式(按位)				位1：记录 位2：直接删除
 // -rm2			(非必要)记录格式					当rm=1时有效，支持log、json、yaml格式
 // -rmv			(非必要)文件路径					当rm=1时有效
 func ParseFlag(globalLogger logx.ILogger) (cfg *FlagConfig, err error) {

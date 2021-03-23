@@ -13,6 +13,8 @@ import (
 
 var (
 	globalLogger logx.ILogger
+	handleDelete bool
+	handleLog    bool
 )
 
 func main() {
@@ -49,6 +51,8 @@ func invoke(cfg *lib.FlagConfig) {
 		globalLogger.Error(err)
 		return
 	}
+	handleDelete = cfg.Result.CheckMode(lib.ResultDelete)
+	handleLog = cfg.Result.CheckMode(lib.ResultLog)
 	for _, file := range list {
 		invokeImage(file, cfg)
 	}
@@ -75,9 +79,10 @@ end:
 }
 
 func handleImage(path string, cfg *lib.FlagConfig) {
-	switch cfg.Result.Mode {
-	case lib.Delete:
+	if handleDelete {
 		filex.Remove(path)
-		globalLogger.Info("Delete Image At:", path)
+	}
+	if handleLog {
+		globalLogger.Info("ResultDelete Image At:", path)
 	}
 }
