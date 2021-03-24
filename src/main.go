@@ -10,6 +10,7 @@ import (
 	_ "github.com/xuzhuoxi/infra-go/imagex/formatx/jpegx"
 	_ "github.com/xuzhuoxi/infra-go/imagex/formatx/pngx"
 	"github.com/xuzhuoxi/infra-go/logx"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"
 )
@@ -139,6 +140,12 @@ func exportResult(resultFiles []string) {
 		return
 	}
 	if lib.ResultFileYml == config.Result.LogFormat {
+		data, err := yaml.Marshal(result)
+		if nil != err {
+			globalLogger.Errorln(err)
+			return
+		}
+		ioutil.WriteFile(config.Result.LogPath, data, os.ModePerm)
 		return
 	}
 }
