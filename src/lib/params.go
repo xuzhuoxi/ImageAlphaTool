@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/xuzhuoxi/infra-go/filex"
 	"github.com/xuzhuoxi/infra-go/logx"
+	"github.com/xuzhuoxi/infra-go/mathx"
 	"github.com/xuzhuoxi/infra-go/osxu"
 	"strconv"
 	"strings"
@@ -31,13 +32,13 @@ func (fs *FlagSource) CheckFormat(format string) bool {
 }
 
 func (fs *FlagSource) ParseSource(source string, format string) error {
-	BasePath := osxu.GetRunningDir()
+	runningDir := osxu.GetRunningDir()
 	In := filex.FormatPath(source)
 	if "" == In {
 		return errors.New("FlagSource:in is empty! ")
 	}
 	if strings.Index(In, "./") == 0 {
-		In = filex.Combine(BasePath, In)
+		In = filex.Combine(runningDir, In)
 	}
 	if !filex.IsExist(In) {
 		return errors.New(fmt.Sprintf("FlagSource:in(%s) is not exist! ", In))
@@ -135,18 +136,14 @@ func (fr *FlagResult) CheckMode(mode ResultMode) bool {
 	return (fr.Mode & mode) > 0
 }
 
-func (fr *FlagResult) ParseResult(mode ResultMode, format string, path string, logger logx.ILogger) error {
-	if mode == ResultNone {
-		return errors.New("FlagResult:mode is error! ")
+func (fr *FlagResult) ParseResult(modeMark ResultMode, format string, path string, logger logx.ILogger) error {
+	if modeMark == ResultNone {
+		return errors.New("FlagResult:modeMark is error! ")
 	}
-	fr.Mode = mode
-
-	if mode == ResultDelete {
-		return nil
-	}
+	fr.Mode = modeMark
 
 	format = strings.ToLower(format)
-	isSupportFormat := "log" == format || "json" == format || "yaml" == format
+	isSupportFormat := ResultFileLog == format || ResultFileJson == format || ResultFileYml == format
 	if !isSupportFormat {
 		return errors.New("ParseResult:format is error! ")
 	}
@@ -156,18 +153,22 @@ func (fr *FlagResult) ParseResult(mode ResultMode, format string, path string, l
 	if "" == path {
 		return errors.New("ParseResult:path is empty! ")
 	}
-	BasePath := osxu.GetRunningDir()
+	basePath := osxu.GetRunningDir()
 	if strings.Index(path, "./") == 0 {
-		path = filex.Combine(BasePath, path)
+		path = filex.Combine(basePath, path)
 	}
 	if filex.IsFolder(path) {
 		return errors.New(fmt.Sprintf("ParseResult:path(%s) is folder! ", path))
 	}
 	fr.LogPath = path
-
 	if format == "log" {
 		dir, filename := filex.Split(path)
-		logger.SetConfig(logx.LogConfig{Type: logx.TypeRollingFile, FileDir: dir, FileName: filename, FileExtName: ""})
+		logger.SetConfig(logx.LogConfig{Type: logx.TypeRollingFile, Level: logx.LevelInfo, MaxSize: 5 * mathx.MB, FileDir: dir, FileName: filename, FileExtName: ""})
 	}
 	return nil
+}
+
+type Result struct {
+	Dir  string
+	Data []string
 }

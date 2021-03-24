@@ -21,9 +21,9 @@ func (fc *FlagConfig) ParseFilter(mode FilterMode, value string) error {
 	return fc.Filter.ParseFilter(mode, value)
 }
 
-func (fc *FlagConfig) ParseResult(mode ResultMode, format string, path string, logger logx.ILogger) error {
+func (fc *FlagConfig) ParseResult(modeMark ResultMode, format string, path string, logger logx.ILogger) error {
 	fc.Result = &FlagResult{}
-	return fc.Result.ParseResult(mode, format, path, logger)
+	return fc.Result.ParseResult(modeMark, format, path, logger)
 }
 
 // -src 		(必要)来源文件夹
@@ -40,7 +40,7 @@ func ParseFlag(globalLogger logx.ILogger) (cfg *FlagConfig, err error) {
 	format := flag.String("format", "", "(必要)来源文件格式，多个格式用','分开!")
 	fm := flag.Int("fm", 0, "(必要)配置模式，1区间2相等3小于4小于等于5大于6大于等于!")
 	fv := flag.String("fv", "", "(必要)配置参数，fm=1时：数值,数值。其它：数值。注意数值：[0,255]!")
-	rm := flag.Int("rm", 0, "(必要)结果模式，1记录2直接删除!")
+	rm := flag.Int("rm", 0, "必要)结果模式(按位)，位1：记录 位2：直接删除")
 	rm2 := flag.String("rm2", "", "(非必要)记录格式，当rm=1时有效，支持log、json、yaml格式!")
 	rmv := flag.String("rmv", "", "(非必要)文件路径，当rm=1时有效!")
 	flag.Parse()

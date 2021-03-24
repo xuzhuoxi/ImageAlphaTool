@@ -22,10 +22,16 @@ const (
 type ResultMode int
 
 const (
-	// 无
-	ResultNone ResultMode = 1 << iota
 	// 记录
-	ResultLog
+	ResultLog ResultMode = 1 << iota
 	// 删除
 	ResultDelete
+	// 无
+	ResultNone ResultMode = 0
+)
+
+const (
+	ResultFileLog  = "log"
+	ResultFileJson = "json"
+	ResultFileYml  = "yml"
 )
