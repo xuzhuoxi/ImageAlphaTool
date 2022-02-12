@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/xuzhuoxi/ImageAlphaTool/src/lib"
+	"github.com/xuzhuoxi/ImageClearer/src/lib"
 	"github.com/xuzhuoxi/infra-go/encodingx/jsonx"
 	"github.com/xuzhuoxi/infra-go/filex"
 	"github.com/xuzhuoxi/infra-go/imagex"

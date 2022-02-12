@@ -1,6 +1,6 @@
-# ImageAlphaTool
+# ImageClearer
 
-ImageAlphaTool can be used to split image into multiple small images. You can specify the size or the number of divisions.
+ImageClearer can be used to split image into multiple small images. You can specify the size or the number of divisions.
 
 ## Compatibility
 
@@ -10,12 +10,12 @@ go 1.15.8
 
 ### Download Release
 
-- Download the release [here](https://github.com/xuzhuoxi/ImageAlphaTool/releases).
+- Download the release [here](https://github.com/xuzhuoxi/ImageClearer/releases).
 
 - Download the repository:
 
 	```sh
-	go get -u github.com/xuzhuoxi/ImageAlphaTool
+	go get -u github.com/xuzhuoxi/ImageClearer
 	```
 	
 	This will retrieve the library.
@@ -72,4 +72,4 @@ xuzhuoxi
 
 ## License
 
-ImageAlphaTool source code is available under the MIT [License](/LICENSE).
+ImageClearer source code is available under the MIT [License](/LICENSE).

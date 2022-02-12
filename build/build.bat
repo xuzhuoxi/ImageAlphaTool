@@ -1,3 +1,3 @@
-goxc.exe -os="linux windows freebsd openbsd" -arch="amd64 arm" -n=ImageAlphaTool -pv=1.0.0 -wd=../src -d=./release -include=*.go,README*,LICENSE*
+goxc.exe -os="linux windows freebsd openbsd" -arch="amd64 arm" -n=ImageClearer -pv=1.0.0 -wd=../src -d=./release -include=*.go,README*,LICENSE*
 
 pause
