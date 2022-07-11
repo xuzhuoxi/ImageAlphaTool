@@ -77,7 +77,7 @@ func invoke() {
 
 // 统计文件，过滤非指定扩展名的文件
 func statFiles() (imageFiles []string, err error) {
-	err = filex.WaldAllFiles(config.Source.Folder, func(path string, info os.FileInfo, err error) error {
+	err = filex.WalkAllFiles(config.Source.Folder, func(path string, info os.FileInfo, err error) error {
 		fileName := info.Name()
 		if !formatx.CheckFormatRegistered(filex.GetExtWithoutDot(fileName)) {
 			return nil
