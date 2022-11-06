@@ -1,6 +1,6 @@
 # ImageClearer
 
-ImageClearer can be used to split image into multiple small images. You can specify the size or the number of divisions.
+ImageClearer can be used to clean up images in the catalog with pixels that match the criteria.
 
 ## Compatibility
 
